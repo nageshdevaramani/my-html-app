@@ -3,21 +3,15 @@ pipeline {
 
     stages {
 
-        stage('Build Docker Image') {
+        stage('Check Docker') {
             steps {
-                sh 'docker build -t my-html-app .'
+                sh 'docker ps'
             }
         }
 
-        stage('Stop Old Container') {
+        stage('Run Test Container') {
             steps {
-                sh 'docker rm -f my-html-container || true'
-            }
-        }
-
-        stage('Run Container') {
-            steps {
-                sh 'docker run -d -p 8081:80 --name my-html-container my-html-app'
+                sh 'docker run -d -p 8082:80 nginx'
             }
         }
     }
